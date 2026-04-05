@@ -1,32 +1,23 @@
-# Install streamlit if not already
-# !pip install streamlit
+
 
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-# -------------------------------
-# Initialize session state
-# -------------------------------
+
 if "ammo" not in st.session_state:
     st.session_state.ammo = 6
     st.session_state.kills = 0
     st.session_state.camo = "Neutral"
     st.session_state.log = []
 
-# -------------------------------
-# App Title
-# -------------------------------
+
 st.title("🪖 ReconBot Tactical Simulation")
 
-# -------------------------------
-# Status Bar
-# -------------------------------
+
 st.markdown(f"**Ammo:** {st.session_state.ammo}/6 | **Kills:** {st.session_state.kills} | **Camouflage:** {st.session_state.camo}")
 
-# -------------------------------
-# Buttons
-# -------------------------------
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -56,14 +47,10 @@ with col3:
         st.session_state.ammo = 6
         st.session_state.log.append("Reloading magazine...")
 
-# -------------------------------
-# Kill Log
-# -------------------------------
+
 st.subheader("📜 Kill Confirmation Log")
 for entry in st.session_state.log[-10:]:
     st.write(entry)
 
-# -------------------------------
-# Updated Status Bar
-# -------------------------------
+
 st.markdown(f"**Ammo:** {st.session_state.ammo}/6 | **Kills:** {st.session_state.kills} | **Camouflage:** {st.session_state.camo}")
