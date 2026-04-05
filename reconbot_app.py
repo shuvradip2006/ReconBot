@@ -1,8 +1,18 @@
-
-
 import streamlit as st
 import numpy as np
-import matplotlib.pyplot as plt
+import base64
+
+
+def play_sound(file_path):
+    with open(file_path, "rb") as f:
+        audio_bytes = f.read()
+    b64 = base64.b64encode(audio_bytes).decode()
+    md = f"""
+        <audio autoplay>
+        <source src="data:audio/wav;base64,{b64}" type="audio/wav">
+        </audio>
+    """
+    st.markdown(md, unsafe_allow_html=True)
 
 
 if "ammo" not in st.session_state:
@@ -41,16 +51,18 @@ with col2:
             st.session_state.ammo -= 1
             st.session_state.kills += 1
             st.session_state.log.append("Enemy engaged! Kill confirmed.")
+            play_sound("423301__u1769092__visceralbulletimpacts.wav")
 
 with col3:
     if st.button("🔄 Reload"):
         st.session_state.ammo = 6
         st.session_state.log.append("Reloading magazine...")
+        play_sound("674569__sertonin__browning-hi-power-handgun-being-reloaded-while-empty.wav")
 
 
 st.subheader("📜 Kill Confirmation Log")
 for entry in st.session_state.log[-10:]:
     st.write(entry)
 
-
 st.markdown(f"**Ammo:** {st.session_state.ammo}/6 | **Kills:** {st.session_state.kills} | **Camouflage:** {st.session_state.camo}")
+
